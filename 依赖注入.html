@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body ng-app="App">
+	<div ng-controller="DemoController">
+		<h3>{{name}}</h3>
+	</div>
+	<div ng-controller="test">
+		<h3>{{name}}</h3>
+	</div>
+<script type="text/javascript" src="libs/angular.min.js"></script>
+	<script type="text/javascript">
+		var App = angular.module('App',[]);
+		//控制器依赖模块（模型）
+		//1、行内注入
+		//数组就是用来依赖注入  通过数组来传入 模块 这里是$scope模块和$http模块
+		App.controller('DemoController',['$scope','$http',function(abc,bcd){
+				abc.name = '行内注入';
+
+		}]);
+		//2、推断注入 参数名不能任意写，只能是存的模块名
+		App.controller('test',function($scope,$http){
+				$scope.name = '推断注入 ';
+		})
+	</script>
+</body>
+</html>
