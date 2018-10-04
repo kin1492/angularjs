@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>天气预报</title>
+</head>
+<body ng-app="App">
+	<div ng-controller="weatherCtrl">
+		<table>
+			<tr ng-repeat="weather in weatherData">
+				<td>{{weather.date}}</td>
+				<td>{{weather.temperatrue}}</td>
+				<td>{{weather.weather}}</td>
+				<td>{{weather.wind}}</td>
+				<td><img ng-src="{{weather.dayPictureUrl}}"></td>
+				<td><img ng-src="{{weather.nightPictureUrl}}"></td>
+			</tr>
+
+		</table>
+		
+	</div>
+
+<script type="text/javascript" src="libs/angular.min.js"></script>
+<script type="text/javascript">
+	var weather = angular.module('App',[]);
+	weather.controller('weatherCtrl',['$scope','$http',function($scope,$http){
+		$http({
+			url:'http://api.map.baidu.com/telematics/v3/weather',
+			method:'jsonp',
+			params:{
+				callback:'JSON_CALLBACK',
+				output:'json',
+				ak:'0A5bc3c4fb543c8f9bc54b77bc155724',
+				location:'深圳'
+			}
+		}).success(function(info){
+			console.log(info);
+			$scope.weatherData = info.results[0].weather_data;
+		})
+	}])
+
+</script>
+</body>
+</html>
