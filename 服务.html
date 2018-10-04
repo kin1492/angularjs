@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body ng-app="App">
+	<div ng-controller='demoCtrl'>
+		<dl>
+			<dt>{{title}}</dt>
+			<dd>{{absUrl}}</dd>
+			<dd>url:{{url}}</dd>
+			<dd>host:{{host}}</dd>
+		</dl>
+		<dl>
+			<dt>{{title2}}</dt>
+			<dd>{{t2}}</dd>
+			<dd>{{money}}</dd>
+
+		</dl>
+		<dl>
+			<dt>{{title3}}</dt>
+		</dl>
+		<dl>
+			<dt>{{title4}}</dt>
+		</dl>
+
+	</div>
+<script type="text/javascript" src="libs/angular.min.js"></script>
+<script type="text/javascript">
+	var App = angular.module('App',[]);
+	App.controller('demoCtrl',['$scope','$location','$filter','$log','$http',function($scope,$location,$filter,$log,$http){
+		$scope.title = '学习$location服务';
+		console.log($location);
+		$scope.absUrl = $location.absUrl();
+		$scope.url = $location.url();//取出锚点后面打内容   file:///home/chenqunhong/project/服务.html#abc 结果为/abc
+		$scope.host = $location.host();
+
+		//过滤器服务
+		$scope.title2 ='学过滤器服务';
+		$scope.upperCase = $filter('uppercase');
+		$scope.t2 = 'hello world';
+		$scope.t2 = $scope.upperCase($scope.t2);
+		$scope.currency = $filter('currency');
+		$scope.money = 11.11;
+		$scope.money = $scope.currency($scope.money);
+
+		//log服务
+		$scope.title3 = 'log服务';
+		$log.log('和console.log相同的功能');
+		$log.info('info信息');
+		$log.warn('警告信息');
+		$log.debug('调试信息');
+		$log.error('错误信息');
+
+		//http服务
+		$scope.title4 = '$http服务';
+		/*
+		var xhr = new XMLHttpRequest;
+		xhr.open('get/post','example.php?name=itcast');
+		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');//post请求必须加上请求头信息
+		xhr.send('name=itcast');
+		*/
+
+		$http({
+			url:'http://example.php',
+			//method:'get',
+			method:'post',
+			headers:{
+				'Content-Type':'application/x-www-form-urlencoded'
+			},
+			params:{//get的参数
+				name:'cqh'
+			},
+			// data:{//post的参数
+			// 	age:10
+			// }
+			data:'age=10'//post的参数  Content-Type 为formDate是 参数格式 key=v1&key2=v2
+		}).success(function(info){
+			//info就是返回的数据
+		})
+
+
+
+
+
+	}])
+</script>
+</body>
+</html>
