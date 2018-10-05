@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+</head>
+<body ng-app="App">
+
+	<div ng-controller="serverCtrl">
+		{{now}}<br>
+		{{version}}
+		
+	</div>
+
+<script type="text/javascript" src="libs/angular.min.js"></script>
+<script type="text/javascript">
+	var App = angular.module('App',[]);
+	App.controller('serverCtrl',['$scope','format','showTime','version',function($scope,format,showTime,version){
+		var  data ={
+			age: 10,
+			sex: 'male',
+			name: 'angular'
+		}
+		console.log(format.format(data));
+		console.log(format.sayHello());
+		$scope.now = showTime.now();
+		showTime.sayHello();
+		$scope.version = version;
+	}])
+
+// 提供了3中方法实现自定义服务
+// factory、service、value
+// 自定义服务方式一
+   App.factory('format',['$filter',function($filter){
+   	//自定义服务，但是依赖filter服务
+   	// 服务是一个对象或函数 
+    function format(arg){
+   		var s = '';
+   		for (var key in arg){
+   			s += key + '=' + arg[key] + '&';
+
+   		}
+   		s = s.slice(0,-1);
+   		return s;
+   	}
+   	function sayHello(){
+   		console.log("hello world");
+   	}
+
+   	return {
+   		'format': format,
+   		'sayHello':sayHello
+   	}
+
+   }])
+//自定义服务方式二
+	App.service('showTime',['$filter',function($filter){
+		 
+		
+		this.now = function(){
+			var now = new Date;
+			var date = $filter('date');
+			return date(now,'yyyy/MM/dd hh:mm:ss');
+		}
+		this.sayHello = function(){
+			console.log('showTime sayHello');
+		}
+	}])
+//自定义服务方式三,常用来定义常量
+	App.value('author','cqh');
+	App.value('version','1.0');
+</script>
+</body>
+</html>

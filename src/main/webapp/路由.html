@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+</head>
+<body ng-app="App" ng-controller="demo">
+<a href="#on1">button1</a>
+<a href="#on2">button2</a>
+<a href="#on3">button3</a>
+<div class="content"></div>
+<script type="text/javascript" src="libs/angular.min.js"></script>
+<script type="text/javascript">
+	window.addEventListener('hashchange',function(){
+		var hash = location.hash;
+		hash = hash.slice(1);
+		console.log(hash);
+		var xhr = new XMLHttpRequest;
+		xhr.open('get','10-01.php?hash='+hash);
+		xhr.send(null);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState ==4 && xhr.status ==200){
+				var result = xhr.responseText;
+				document.querySelector('.content').innerHTML = result;
+			}
+		}
+	})
+	var App = angular.module('App',[]);
+	App.controller('demo',['$scope',function($scope){
+		//监听锚点变化然后发送请求
+		//hashchange事件可以监听锚点变化
+	}])
+
+</script>
+</body>
+</html>

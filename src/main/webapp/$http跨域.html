@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+</head>
+<body ng-app="App">
+	<div ng-controller="crossCtrl">
+		
+		
+	</div>
+
+<script type="text/javascript" src="libs/angular.min.js"></script>
+<script type="text/javascript">
+	var App = angular.module('App',[]);
+	App.controller('crossCtrl',['$scope','$http',function($scope){
+		$http({
+			url:'jsonp.php?callback=Json_callback',
+			method:'jsonp'
+		})
+	}])
+
+</script>
+</body>
+</html>
