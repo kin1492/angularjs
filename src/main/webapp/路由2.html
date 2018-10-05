@@ -31,11 +31,24 @@
 		}).when('/contact',{
 			template: '<h1>contact Pages!</h1>'
 		}).when('/list',{
-			templateUrl: 'list.html'
+			templateUrl: 'list.html',
+			controller:'listCtrl'
 		})
 		.otherwise({
 			redirectTo: '/index'
 		});
+	}])
+	App.controller('listCtrl',['$scope','$http',function($scope,$http){
+		$http({
+			url: 'listData.jsp',
+			method: 'get' 
+		}).success(function(info){
+			console.log(info);
+			$scope.items = info;
+
+			
+		})
+
 	}])
 
 </script>
