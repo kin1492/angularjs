@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>音乐列表</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		body{
+			padding: 0;
+			margin: 0;
+		}
+		ul{
+			padding: 0;
+			margin: 0;
+		}
+		ol{
+			min-height: 400px;
+			padding-top: 0;
+			margin: 0;
+			border: 1px solid #ccc;
+		}
+		ol li{
+			height: 40px;
+			line-height: 40px;
+		}
+		.music{
+			width: 600px;
+			margin: 100px auto;
+		}
+		.music nav{
+			height: 40px;
+			background: #000;
+			display: flex;
+		}
+		.music nav a{
+			text-align: center;
+			line-height: 40px;
+			color: #fff;
+			text-decoration: none;
+			flex: 1;
+		}
+
+	</style>
+</head>
+<body ng-app="App" >
+<div class="music">
+	<nav>
+		<a href="#/1">流行</a>
+		<a href="#/2">华语</a>
+		<a href="#/3">欧美</a>
+		<a href="#/4">日韩</a>
+	</nav>
+	<ol>
+		<div ng-view></div>
+		 
+
+	</ol>
+
+</div>
+<script type="text/javascript" src="libs/angular.min.js"></script>
+<script type="text/javascript" src="libs/angular-route.js"></script>
+<script type="text/javascript">
+	var App = angular.module('App',['ngRoute']);
+
+		App.config(['$routeProvider',function($routeProvider){
+			$routeProvider.when('/:id',{
+				templateUrl: 'music.html',
+				controller: 'musicCtrl'
+			})
+		}])
+
+		App.controller('musicCtrl',['$http','$scope','$routeParams',function($http,$scope,$routeParams){
+				var id = $routeParams.id;
+				$http({
+					url:'musicApi.jsp',
+					method: 'get',
+					params: {
+						type: id
+					}
+
+				}).success(function(info){
+					$scope.musics = info;
+				})
+
+		}])
+
+		 
+ 
+
+
+</script>
+
+
+
+</body>
+</html>
