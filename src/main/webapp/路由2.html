@@ -9,6 +9,9 @@
 <a href="#/introduce">介绍</a>
 <a href="#/contact">首页</a>
 <a href="#/list">列表</a>
+<a href="#/params1?name=xiaoming&age=10">路由参数1</a>
+<a href="#/params2/5/xiaoming">路由参数2</a>
+
 
 <div class="content">
 	<!-- 占位符 -->
@@ -33,6 +36,12 @@
 		}).when('/list',{
 			templateUrl: 'list.html',
 			controller:'listCtrl'
+		}).when('/params1',{
+			templateUrl: 'list.html',
+			controller:'paramsCtrl1'
+		}).when('/params2/:index/:name',{
+			templateUrl: 'list.html',
+			controller: 'paramsCtrl2'
 		})
 		.otherwise({
 			redirectTo: '/index'
@@ -45,10 +54,15 @@
 		}).success(function(info){
 			console.log(info);
 			$scope.items = info;
-
-			
 		})
 
+	}])
+
+	App.controller('paramsCtrl1',['$scope','$routeParams',function($scope,$routeParams){
+		console.log($routeParams);
+	}])
+	App.controller('paramsCtrl2',['$scope','$routeParams',function($scope,$routeParams){
+		console.log($routeParams);
 	}])
 
 </script>
