@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div ng-controlle="DemoCtrl">
+		<div class="box">一个普通的div</div>
+		<button>点击</button>
+
+	</div>
+<script type="text/javascript" src="libs/jquery.min.js"></script>
+<script type="text/javascript" src="libs/angular.min.js"></script>
+<script type="text/javascript">
+	// var App = angular.module('App',[]);
+
+	// App.controller('DemoCtrl',['$scope',function($scope){
+
+	// }])
+	//原生DOM对象
+	var box = document.querySelector(".box");
+	var btn = document.querySelector("button");
+
+	//转换成jquery对象 
+	box = angular.element(box);
+	btn = angular.element(btn);
+
+	btn.on('click',function(){
+		//jqLit默认支持css方法 不支持animate方法
+		//jqLit不支持的方法需要引入jquery
+		box.css("color","red").animate({
+			fontSize:'40px'
+		},400)
+	})
+
+
+
+
+</script>
+</body>
+</html>
