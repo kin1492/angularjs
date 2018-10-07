@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- 动画相关博客https://www.cnblogs.com/shenfangfang/p/5713564.html -->
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+    	.navs{
+    		width:200px;
+    		height:100px;
+    		background: #ff4485;
+    		left: -200px;
+    		position: fixed;
+    		transform: translate(-100%);
+    		transition: 0.5s 0.1s;
+    	}
+    	.cllopase{
+    		transform:translate(200px);
+    		transition: transform 0.15s ease;
+    	}
+        .staticcss{
+        	text-align:center;
+        	height:30px;
+        	width:100px;
+        	background: #dedede;
+        	transform: translate(-100%); transition-duration: 0s;
+        }
+        .dynamic{
+        	/*transition-duration: 2s;
+        	transition-delay: 0.2s;*/
+			-webkit-transform: translate(0);  /* Safari 和 Chrome */
+			transition: transform 0.5s ease;
+        }
+		#box1 {
+              height: 100px;
+              width: 100px;
+              background: green;
+              transition: background 2s ease,transform 0.5s ease-in 1s;/*只对背景属性进行过度*/
+        }
+        #box1:hover{transform:rotate(180deg) scale(.5,.5);background:red;font-size:22px;}
+
+        #box2 {
+              height: 100px;
+              width: 100px;
+              background: green;
+              transition: all 2s ease;/*对所有支持的属性进行过度*/
+        }
+        #box2:hover{transform:rotate(180deg) scale(.5,.5);background:red;font-size:22px;}
+
+        #box3{
+            height: 100px;
+            width: 100px;
+            background: blue;
+        }
+        #box3:hover{
+            transform: rotate(180deg) scale(.5, .5);
+            background: red;
+            transition: background 2s ease, transform 2s ease-in 1s;}
+    </style>
+</head>
+<body ng-app="App" ng-controller="transformCtrl">
+	<a href="#" ng-click="transformdiv()">click me </a>
+	<div class="navs" ng-class="{cllopase:do}">
+		<div class="staticcss" >今日一刻</div>
+		<div class="staticcss" >往期内容</div>
+		<div class="staticcss" >每日精选</div>
+	</div>
+	
+<div id="box1">BOX1</div>
+<div id="box2">BOX2</div>
+<div id="box3">BOX3</div>
+
+
+<script type="text/javascript" src="libs/angular.min.js"></script>
+<script type="text/javascript">
+	var App = angular.module('App',[]);
+	App.controller('transformCtrl',['$scope',function($scope){
+		$scope.do = false;
+		$scope.transformdiv = function(){
+			$scope.do = !$scope.do;
+			var items = document.querySelectorAll(".staticcss");
+			if($scope.do){
+				for(var i=0;i<items.length;i++){
+				items[i].style.transform = 'translate(0)';
+				items[i].style.transitionDuration = (i+1)*0.25+'s';
+			   }
+			}else{
+				for(var i=0;i<items.length;i++){
+				items[i].style.transform = 'translate(-100%)';
+				items[i].style.transitionDuration = (i+1)*0.25+'s';
+			}
+		}
+	}
+
+	}])
+
+</script>
+</body>
+</html>
